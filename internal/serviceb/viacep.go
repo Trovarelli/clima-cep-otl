@@ -59,7 +59,6 @@ func (b *flexibleBool) UnmarshalJSON(data []byte) error {
 }
 
 func (c *ViaCEPClient) GetCity(ctx context.Context, zipcode string) (string, error) {
-	// Span manual exigido pelo desafio para medir tempo de busca do CEP
 	ctx, span := c.tracer.Start(ctx, "busca-cep")
 	defer span.End()
 

@@ -49,7 +49,6 @@ type weatherAPIResponse struct {
 }
 
 func (c *WeatherAPIClient) GetTemperatureCelsius(ctx context.Context, city string) (float64, error) {
-	// Span manual exigido pelo desafio para medir tempo de busca da temperatura
 	ctx, span := c.tracer.Start(ctx, "busca-temperatura")
 	defer span.End()
 

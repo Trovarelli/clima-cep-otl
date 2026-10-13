@@ -52,7 +52,6 @@ func (h *Handler) Routes() http.Handler {
 }
 
 func (h *Handler) handleRequest(w http.ResponseWriter, r *http.Request) {
-	// Extrai contexto propagado pelo Serviço A (W3C traceparent)
 	ctx := otel.GetTextMapPropagator().Extract(r.Context(), propagation.HeaderCarrier(r.Header))
 	ctx, span := h.tracer.Start(ctx, "service-b-orchestration")
 	defer span.End()
@@ -63,7 +62,6 @@ func (h *Handler) handleRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 1. Consulta cidade no ViaCEP (com span manual interno busca-cep)
 	city, err := h.locationProvider.GetCity(ctx, cep)
 	if err != nil {
 		if errors.Is(err, entity.ErrZipcodeNotFound) {
@@ -74,7 +72,6 @@ func (h *Handler) handleRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// 2. Consulta temperatura na WeatherAPI (com span manual interno busca-temperatura)
 	tempC, err := h.weatherProvider.GetTemperatureCelsius(ctx, city)
 	if err != nil {
 		if errors.Is(err, entity.ErrZipcodeNotFound) {

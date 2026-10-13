@@ -69,7 +69,6 @@ func (h *Handler) handlePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Encaminha requisição para o Serviço B com injeção de contexto OTEL
 	serviceBEndpoint := fmt.Sprintf("%s/", h.serviceBURL)
 	payload, _ := json.Marshal(req)
 
@@ -80,7 +79,6 @@ func (h *Handler) handlePost(w http.ResponseWriter, r *http.Request) {
 	}
 	reqB.Header.Set("Content-Type", "application/json")
 
-	// Injeta W3C trace context nos headers
 	otel.GetTextMapPropagator().Inject(ctx, propagation.HeaderCarrier(reqB.Header))
 
 	respB, err := h.httpClient.Do(reqB)
@@ -96,7 +94,6 @@ func (h *Handler) handlePost(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Propaga Content-Type, Status Code e Body original do Serviço B
 	if ct := respB.Header.Get("Content-Type"); ct != "" {
 		w.Header().Set("Content-Type", ct)
 	} else {
