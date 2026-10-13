@@ -1,0 +1,45 @@
+﻿### 1. Sucesso no Serviço A (200 OK)
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "01001000"
+}
+
+### 2. Formato Inválido no Serviço A - Menos de 8 dígitos (422)
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "1234567"
+}
+
+### 3. Formato Inválido no Serviço A - Com letras (422)
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "1234567a"
+}
+
+### 4. CEP Não Encontrado no Serviço A (404)
+POST http://localhost:8080/
+Content-Type: application/json
+
+{
+  "cep": "99999999"
+}
+
+### 5. Chamada Direta ao Serviço B (200 OK)
+POST http://localhost:8081/
+Content-Type: application/json
+
+{
+  "cep": "01001000"
+}
+
+### 6. Health Check Serviço A
+GET http://localhost:8080/health
+
+### 7. Health Check Serviço B
+GET http://localhost:8081/health

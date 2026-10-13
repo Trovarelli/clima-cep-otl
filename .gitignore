@@ -1,0 +1,27 @@
+﻿# Arquivos de ambiente
+.env
+*.env
+
+# Binários e executáveis
+/service-a
+/service-b
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Diretórios de build e temporários
+bin/
+dist/
+tmp/
+
+# IDE e editores
+.idea/
+.vscode/
+*.swp
+*~
+.DS_Store
+
+# Logs
+*.log
